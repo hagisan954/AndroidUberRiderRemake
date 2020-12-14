@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -93,10 +95,14 @@ import jp.ac.hal.androiduberriderremake.RequestDriverActivity;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback, IFirebaseFailedListener, IFirebaseDriverInfoListener {
 
-    @BindView(R.id.activity_main)
-    SlidingUpPanelLayout slidingUpPanelLayout;
-    @BindView(R.id.txt_welcome)
-    TextView txt_welcome;
+//    @BindView(R.id.activity_main)
+//    SlidingUpPanelLayout slidingUpPanelLayout;
+//    @BindView(R.id.txt_welcome)
+//    TextView txt_welcome;
+//    @BindView(R.id.search_place_layout)
+//    LinearLayout search_place_layout;
+    @BindView(R.id.select_drone)
+    Button select_drone;
 
     private AutocompleteSupportFragment autocompleteSupportFragment;
 
@@ -127,6 +133,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
     private IGoogleAPI iGoogleAPI;
 
     private boolean isNextLaunch =false;
+
 
 
 
@@ -182,20 +189,47 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
 
     private void initViews(View root) {
         ButterKnife.bind(this, root);
-        Common.setWelcomeMessage(txt_welcome);
+        //Common.setWelcomeMessage(txt_welcome);
     }
 
     private void init() {
 
         Places.initialize(getContext(), getString(R.string.google_maps_key));
-        autocompleteSupportFragment = (AutocompleteSupportFragment) getChildFragmentManager()
-                .findFragmentById(R.id.autocomplete_fragment);
-        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME, Place.Field.LAT_LNG));
-        autocompleteSupportFragment.setHint(getString(R.string.where_to));
-        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//        autocompleteSupportFragment = (AutocompleteSupportFragment) getChildFragmentManager()
+//                .findFragmentById(R.id.autocomplete_fragment);
+//        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME, Place.Field.LAT_LNG));
+//        autocompleteSupportFragment.setHint(getString(R.string.where_to));
+//        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(@NonNull Place place) {
+//                //Snackbar.make(getView(),"" + place.getLatLng(),Snackbar.LENGTH_LONG).show();
+//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+//                        && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    Snackbar.make(getView(),getString(R.string.permission_require),Snackbar.LENGTH_LONG).show();
+//                    return;
+//                }
+//                fusedLocationProviderClient.getLastLocation()
+//                        .addOnSuccessListener(location -> {
+//
+//                            LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
+//                            LatLng destination = new LatLng(place.getLatLng().latitude,place.getLatLng().longitude);
+//
+//                            startActivity(new Intent(getContext(), RequestDriverActivity.class));
+//                            EventBus.getDefault().postSticky(new SelectPlaceEvent(origin,destination,place.getAddress()));
+//                        });
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Status status) {
+//                Snackbar.make(getView(),"" + status.getStatusMessage(),Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+
+
+//クリックイベント追加
+        select_drone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlaceSelected(@NonNull Place place) {
-                //Snackbar.make(getView(),"" + place.getLatLng(),Snackbar.LENGTH_LONG).show();
+            public void onClick(View v) {
                 if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     Snackbar.make(getView(),getString(R.string.permission_require),Snackbar.LENGTH_LONG).show();
@@ -203,20 +237,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
                 }
                 fusedLocationProviderClient.getLastLocation()
                         .addOnSuccessListener(location -> {
-
-                            LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
-                            LatLng destination = new LatLng(place.getLatLng().latitude,place.getLatLng().longitude);
+                            LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
+                            LatLng destination = new LatLng(38, 38);
 
                             startActivity(new Intent(getContext(), RequestDriverActivity.class));
-                            EventBus.getDefault().postSticky(new SelectPlaceEvent(origin,destination,place.getAddress()));
+                            EventBus.getDefault().postSticky(new SelectPlaceEvent(origin, destination, "dokoka"));
                         });
-            }
 
-            @Override
-            public void onError(@NonNull Status status) {
-                Snackbar.make(getView(),"" + status.getStatusMessage(),Snackbar.LENGTH_LONG).show();
             }
         });
+
 
 
         iGoogleAPI = RetrofitClient.getInstance().create(IGoogleAPI.class);
@@ -268,7 +298,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
                     {
                         previousLocation = currentLocation = locationResult.getLastLocation();
                         firstTime = false;
-                        setRestrictPlacesInCountry(locationResult.getLastLocation()); //Always set again,not just first time
+                        //setRestrictPlacesInCountry(locationResult.getLastLocation()); //Always set again,not just first time
 
 
                     }
@@ -307,8 +337,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
         try {
             Geocoder geocoder = new Geocoder(getContext(),Locale.getDefault());
             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-            if(addressList.size() > 0)
-                autocompleteSupportFragment.setCountry(addressList.get(0).getCountryCode());
+//            if(addressList.size() > 0)
+//                autocompleteSupportFragment.setCountry(addressList.get(0).getCountryCode());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -514,10 +544,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
                         View locationButton = ((View)mapFragment.getView().findViewById(Integer.parseInt("1")).getParent())
                                 .findViewById(Integer.parseInt("2"));
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+                        View locationButton2 =(View)mapFragment.getView().findViewById(Integer.parseInt("1"));
+                        RelativeLayout.LayoutParams params2 = (RelativeLayout.LayoutParams) locationButton2.getLayoutParams();
+                        params2.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
+                        params2.addRule(RelativeLayout.ALIGN_PARENT_TOP,RelativeLayout.TRUE);
+                        params2.setMargins(0,100,0,0);
+
                         //Right bottom
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
-                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-                        params.setMargins(0,0,0,250); // Move view to see Zoom control
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP,RelativeLayout.TRUE);
+                        params.setMargins(0,0,0,300); // Move view to see Zoom control
 
                         buildLocationRequest();
                         buildLocationCallback();
@@ -539,6 +575,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+
         try {
             boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(),R.raw.uber_maps_style));
             if(!success)
@@ -559,16 +596,28 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, IFireb
     @Override
     public void onDriverInfoLoadSuccess(DriverGeoModel driverGeoModel) {
         //If already have marker with this key,doesn't set again
-        if (!Common.markerList.containsKey(driverGeoModel.getKey()))
+        if (!Common.markerList.containsKey(driverGeoModel.getKey())) {
             Common.markerList.put(driverGeoModel.getKey(),
                     mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(driverGeoModel.getGeoLocation().latitude,
-                            driverGeoModel.getGeoLocation().longitude))
-                    .flat(true)
-                    .title(Common.buildName(driverGeoModel.getDriverInfoModel().getFirstname(),
-                            driverGeoModel.getDriverInfoModel().getLastname()))
-                    .snippet(driverGeoModel.getDriverInfoModel().getPhoneNumber())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.car))));
+                            .position(new LatLng(driverGeoModel.getGeoLocation().latitude,
+                                    driverGeoModel.getGeoLocation().longitude))
+                            .flat(true)
+                            .title(Common.buildName(driverGeoModel.getDriverInfoModel().getFirstname(),
+                                    driverGeoModel.getDriverInfoModel().getLastname()))
+                            .snippet(driverGeoModel.getDriverInfoModel().getPhoneNumber())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.drone3))));//改善部分、ドローン画像に変更
+
+            //改善部分、マーカーのクリックリスナーを作る。
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    //search_place_layout.setVisibility(View.GONE);
+                    //slidingUpPanelLayout.setPanelHeight(110);
+                    select_drone.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            });
+        }
         if(!TextUtils.isEmpty(cityName))
         {
             DatabaseReference driverLocation = FirebaseDatabase.getInstance()

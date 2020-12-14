@@ -45,4 +45,5 @@
     <string name="driver_name_example">Jonathan Wick</string>
     <string name="ascii_dot">■</string>
     <string name="language_example">Knows English</string>
+    <string name="this_drone">Have this drone come!</string>
 </resources>

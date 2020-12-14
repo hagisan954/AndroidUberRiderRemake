@@ -1,46 +1,49 @@
 <resources>
     <string name="app_name">AndroidUberRiderRemake</string>
-    <string name="register_text">Let\'s start with creating your account</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="continue_text">Continue</string>
+    <string name="register_text">アカウントを作成しましょう</string>
+<!--    Let\'s start with creating your account-->
+    <string name="first_name">姓</string>
+    <string name="last_name">名</string>
+    <string name="phone_number">電話番号</string>
+    <string name="continue_text">続行</string>
     <string name="title_activity_driver_home">DriverHomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">設定</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_sign_out">Sign Out</string>
+    <string name="menu_home">ホーム</string>
+    <string name="menu_sign_out">サインアウト</string>
 
     <string name="home_second">Home Second</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">マップ</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="permission_require">Location permission required</string>
-    <string name="drivers_not_found">Drivers not found!</string>
+    <string name="permission_require">位置情報の許可が必要です</string>
+<!--    Location permission required-->
+    <string name="drivers_not_found">ドローンが見つかりません</string>
     <string name="not_found_key">Not found driver with key</string>
-    <string name="welcome">Good afternoon</string>
-    <string name="choose_a_saved_place">Choose a saved place</string>
-    <string name="where_to">Where to?</string>
-    <string name="city_name_empty">City name is empty</string>
-    <string name="title_activity_request_driver">Map</string>
-    <string name="pay_by_cash">Pay by cash</string>
-    <string name="confirm_uber">Confirm Uber</string>
-    <string name="confirm_pickup_spot">Confirm Pickup Spot</string>
+    <string name="welcome">こんにちは</string>
+    <string name="choose_a_saved_place">場所を選択してください</string>
+    <string name="where_to">どこへ行きますか</string>
+    <string name="city_name_empty">都市名がありません</string>
+    <string name="title_activity_request_driver">マップ</string>
+    <string name="pay_by_cash">支払い</string>
+    <string name="confirm_uber">確認</string>
+    <string name="confirm_pickup_spot">選択場所を確認</string>
     <string name="address_demo">301 Carriann Cove Trail West</string>
-    <string name="meet_driver_here">Meet Driver Here</string>
-    <string name="confirm_pickup">Confirm Pickup</string>
-    <string name="finding_your_ride">Finding your ride</string>
-    <string name="token_not_found">Token not found</string>
-    <string name="request_driver_failed">Failed to send request to driver</string>
-    <string name="no_driver_accept_request">There are no driver accept your request</string>
+    <string name="meet_driver_here">ここにドローンが来ます</string>
+    <string name="confirm_pickup">場所を確認</string>
+    <string name="finding_your_ride">ドローンを見つける</string>
+    <string name="token_not_found">トークンが見つかりません</string>
+    <string name="request_driver_failed">ドローンへのリクエスト送信に失敗しました</string>
+    <string name="no_driver_accept_request">近くにドローンがいないため承認出来ません</string>
+<!--    There are no driver accept your request-->
     <string name="trip_not_found">Trip not found with key</string>
-    <string name="uber_x">Hyundai Tuscon</string>
+    <string name="uber_x">bug_001</string>
     <string name="car_number_example">ABC123</string>
     <string name="driver_name_example">Jonathan Wick</string>
     <string name="ascii_dot">■</string>

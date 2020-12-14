@@ -68,7 +68,7 @@ public class Common {
     public static String buildWelcomeMessage() {
         if(Common.currentRider != null)
         {
-            return new StringBuilder("Welcome")
+            return new StringBuilder("ようこそ")
                     .append(Common.currentRider.getFirstname())
                     .append(" ")
                     .append(Common.currentRider.getLastname()).toString();
@@ -170,11 +170,11 @@ public class Common {
     public static void setWelcomeMessage(TextView txt_welcome) {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if(hour >= 4 && hour <= 12)
-            txt_welcome.setText(new StringBuilder("Good morning."));
+            txt_welcome.setText(new StringBuilder("おはようございます。"));
         else if(hour >= 13 && hour <= 17)
-            txt_welcome.setText(new StringBuilder("Good afternoon."));
+            txt_welcome.setText(new StringBuilder("こんにちは。"));
         else
-            txt_welcome.setText(new StringBuilder("Good evening."));
+            txt_welcome.setText(new StringBuilder("こんばんは。"));
     }
 
     public static String formatDuration(String duration) {

@@ -118,44 +118,48 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
     View fill_maps;
     private DriverGeoModel lastDriverCall;
     private String driverOldPosition="";
-    private Handler handler;
+    private Handler handler,kaitenHandler;
     private float v;
     private double lat,lng;
     private int index,next;
     private LatLng start,end;
 
+    private SelectPlaceEvent selectPlaceEvent;
+
+//    @OnClick(R.id.btn_confirm_uber)
+//    void onCofirmUber() {
+//        confirm_pickup_layout.setVisibility(View.VISIBLE); //Show pickup layout
+//        confirm_uber_layout.setVisibility(View.GONE); //Hide Uber layout
+//
+//        setDataPickup();
+//
+//    }
+
+//    @OnClick(R.id.btn_confirm_pickup)
+//    void onConfirmPickup() {
+//
+//
+//        //setDataPickup();
+//////        if(mMap == null) return;
+//////        if(selectPlaceEvent == null) return;
+////
+////        //Clear map
+////        mMap.clear();
+////        //Tilt
+//       CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(selectPlaceEvent.getOrigin())
+//                .tilt(45f)
+//                .zoom(16f)
+//                .build();
+//
+//        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+////
+////        //Start Animation
+//      addMarkerWithPulseAnimation();
+//   }
 
 
-    @OnClick(R.id.btn_confirm_uber)
-    void onCofirmUber() {
-        confirm_pickup_layout.setVisibility(View.VISIBLE); //Show pickup layout
-        confirm_uber_layout.setVisibility(View.GONE); //Hide Uber layout
-
-        setDataPickup();
-
-    }
-
-    @OnClick(R.id.btn_confirm_pickup)
-    void onConfirmPickup() {
-        if(mMap == null) return;
-        if(selectPlaceEvent == null) return;
-
-        //Clear map
-        mMap.clear();
-        //Tilt
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(selectPlaceEvent.getOrigin())
-                .tilt(45f)
-                .zoom(16f)
-                .build();
-
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-        //Start Animation
-        addMarkerWithPulseAnimation();
-    }
-
-    private void addMarkerWithPulseAnimation() {
+     private void addMarkerWithPulseAnimation() {
         confirm_pickup_layout.setVisibility(View.GONE);
         fill_maps.setVisibility(View.VISIBLE);
         finding_your_ride_layout.setVisibility(View.VISIBLE);
@@ -280,8 +284,6 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
 
     private GoogleMap mMap;
 
-    private SelectPlaceEvent selectPlaceEvent;
-
     //Routes
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private IGoogleAPI iGoogleAPI;
@@ -318,6 +320,16 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
         super.onStart();
         if(!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+
+        kaitenHandler = new Handler();
+
+        kaitenHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                addMarkerWithPulseAnimation();
+            }
+        },100);
+
     }
 
     @Override
@@ -648,6 +660,7 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     private void init() {

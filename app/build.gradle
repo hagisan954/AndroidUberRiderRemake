@@ -87,6 +87,7 @@ dependencies {
     //Sliding Up
     implementation 'com.sothree.slidinguppanel:library:3.3.1'
 
+
     //geofire
     implementation 'com.firebase:geofire-android:3.0.0'
 

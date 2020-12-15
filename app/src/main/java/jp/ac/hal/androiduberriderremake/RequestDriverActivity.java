@@ -69,6 +69,7 @@ import jp.ac.hal.androiduberriderremake.Model.EventBus.DeclineRequestAndRemoveTr
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DeclineRequestFromDriver;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DriveAcceptTripEvent;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DriveCompleteTripEvent;
+import jp.ac.hal.androiduberriderremake.Model.EventBus.DriverArrivedEvent;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.SelectPlaceEvent;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.showNotificationFinishTrip;
 import jp.ac.hal.androiduberriderremake.Model.TripPlanModel;
@@ -112,6 +113,15 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
     TextView txt_driver_name;
     @BindView(R.id.img_driver)
     ImageView img_driver;
+
+    //ドローンを呼ぶボタン
+    @BindView(R.id.call_drone)
+    Button call_drone;
+    @BindView(R.id.cancel_drone)
+    Button cancel_drone;
+    @BindView(R.id.wait_customer)
+    TextView wait_customer;
+
 
 
     @BindView(R.id.fill_maps)
@@ -158,6 +168,11 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
 //      addMarkerWithPulseAnimation();
 //   }
 
+    @OnClick(R.id.call_drone)
+    void onCallDrone(){
+        call_drone.setVisibility(View.GONE);
+        wait_customer.setVisibility(View.VISIBLE);
+    }
 
      private void addMarkerWithPulseAnimation() {
         confirm_pickup_layout.setVisibility(View.GONE);
@@ -481,6 +496,11 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
                 });
     }
 
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void onDriverArrivedEvent(DriverArrivedEvent event){
+        wait_customer.setText(R.string.charge_your_device);
+    }
+
     private void initDriverForMoving(String tripIp, TripPlanModel tripPlanModel) {
         driverOldPosition = new StringBuilder()
                 .append(tripPlanModel.getCurrentLat())
@@ -615,7 +635,7 @@ public class RequestDriverActivity extends FragmentActivity implements OnMapRead
 
     private void addDriverMarker(LatLng destination) {
         destinationMarker = mMap.addMarker(new MarkerOptions().position(destination).flat(true)
-        .icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
+        .icon(BitmapDescriptorFactory.fromResource(R.drawable.drone3)));
     }
 
     private void addPickupMarkerWithDuration(String duration, LatLng origin) {

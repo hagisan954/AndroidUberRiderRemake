@@ -16,6 +16,7 @@ import jp.ac.hal.androiduberriderremake.Model.EventBus.DeclineRequestAndRemoveTr
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DeclineRequestFromDriver;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DriveAcceptTripEvent;
 import jp.ac.hal.androiduberriderremake.Model.EventBus.DriveCompleteTripEvent;
+import jp.ac.hal.androiduberriderremake.Model.EventBus.DriverArrivedEvent;
 import jp.ac.hal.androiduberriderremake.Utils.UserUtils;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -51,6 +52,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 {
                     String tripKey = dataRecv.get(Common.TRIP_KEY);
                     EventBus.getDefault().postSticky(new DriveCompleteTripEvent(tripKey));
+                }
+                else if(dataRecv.get(Common.NOTI_TITLE).equals(Common.DRIVER_ARRIVED))
+                {
+                    Common.showNotification(this, new Random().nextInt(),
+                            dataRecv.get(Common.NOTI_TITLE),
+                            dataRecv.get(Common.NOTI_CONTENT),
+                            null);
+                    EventBus.getDefault().postSticky(new DriverArrivedEvent());
                 }
                 else
                 Common.showNotification(this, new Random().nextInt(),

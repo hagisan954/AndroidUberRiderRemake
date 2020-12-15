@@ -56,6 +56,7 @@ public class Common {
     public static final String TRIP = "Trips"; //Same as name reference in Firebase
     public static final String REQUEST_DRIVER_DECLINE_AND_REMOVE_TRIP = "DeclineAndRemoveTrip";
     public static final String RIDER_COMPLETE_TRIP = "DriverCompleteTrip";
+    public static final String DRIVER_ARRIVED = "Drone arrived";
 
     public static RiderModel currentRider;
 

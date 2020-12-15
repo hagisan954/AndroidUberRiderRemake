@@ -49,4 +49,9 @@
     <string name="ascii_dot">■</string>
     <string name="language_example">Knows English</string>
     <string name="this_drone">Have this drone come!</string>
+    <string name="call_this_drone">このドローンを呼ぶ</string>
+    <string name="back_home">戻る</string>
+    <string name="wait_a_minute_drone">ドローンの到着までしばらくかかります</string>
+    <string name="charge_your_device">ドローンが到着しました！充電を開始します</string>
+    <string name="class_c">Cクラス</string>
 </resources>

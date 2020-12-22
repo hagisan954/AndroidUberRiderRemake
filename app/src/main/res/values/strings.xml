@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidUberRiderRemake</string>
+    <string name="app_name">Light Bug</string>
     <string name="register_text">アカウントを作成しましょう</string>
 <!--    Let\'s start with creating your account-->
     <string name="first_name">姓</string>
@@ -48,7 +48,7 @@
     <string name="driver_name_example">Jonathan Wick</string>
     <string name="ascii_dot">■</string>
     <string name="language_example">Knows English</string>
-    <string name="this_drone">Have this drone come!</string>
+    <string name="this_drone">近くのドローンを探す</string>
     <string name="call_this_drone">このドローンを呼ぶ</string>
     <string name="back_home">戻る</string>
     <string name="wait_a_minute_drone">ドローンの到着までしばらくかかります</string>
